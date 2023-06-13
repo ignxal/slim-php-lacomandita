@@ -5,7 +5,6 @@ class Pedido
     public $id;
     public $id_mesa;
     public $id_producto;
-    public $txt_producto;
     public $fecha_inicio;
     public $codigo_estado_pedido;
     public $descripcion_estado_pedido;
