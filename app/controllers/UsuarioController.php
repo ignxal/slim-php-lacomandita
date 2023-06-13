@@ -12,12 +12,12 @@ class UsuarioController extends Usuario implements IApiUsable
     $clave = $parametros['clave'];
     $tipo = $parametros['tipo'];
 
-    if (isset($parametros['usuario']) && isset($parametros['clave']) && isset($parametros['tipo'])) {
-      $usr = new Usuario();
-      $usr->usuario = $usuario;
-      $usr->clave = $clave;
-      $usr->tipo = $tipo;
-      $usr->crearUsuario();
+    if (isset($usuario) && isset($clave) && isset($tipo)) {
+      $nuevoUsuario = new Usuario();
+      $nuevoUsuario->usuario = $usuario;
+      $nuevoUsuario->clave = $clave;
+      $nuevoUsuario->tipo = $tipo;
+      $nuevoUsuario->CrearUsuario();
 
       $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
     } else {
