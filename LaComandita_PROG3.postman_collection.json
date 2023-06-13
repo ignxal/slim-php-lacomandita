@@ -10,7 +10,39 @@
 			"name": "AltaUsuario",
 			"request": {
 				"method": "POST",
-				"header": []
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "usuario",
+							"value": "prueba",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "123123as",
+							"type": "text"
+						},
+						{
+							"key": "tipo",
+							"value": "bartender",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:666/app/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"usuarios"
+					]
+				}
 			},
 			"response": []
 		},
@@ -18,7 +50,19 @@
 			"name": "ListarUsuarios",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:666/app/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"usuarios"
+					]
+				}
 			},
 			"response": []
 		},
@@ -61,7 +105,19 @@
 			"name": "ListarPedidos",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:666/app/pedidos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"pedidos"
+					]
+				}
 			},
 			"response": []
 		},
@@ -71,13 +127,41 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    tipo:Trago\r\n    descripcion:Vino\r\n    estimado_preparacion: 00: 01: 00\r\n    precio: 700\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tipo",
+							"value": "Trago",
+							"type": "text"
+						},
+						{
+							"key": "descripcion",
+							"value": "Vino",
+							"type": "text"
+						},
+						{
+							"key": "estimado_preparacion",
+							"value": "00: 01: 00",
+							"type": "text"
+						},
+						{
+							"key": "precio",
+							"value": "700",
+							"type": "text"
 						}
-					}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:666/app/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"productos"
+					]
 				}
 			},
 			"response": []
@@ -86,7 +170,19 @@
 			"name": "ListarProductos",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:666/app/productos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"productos"
+					]
+				}
 			},
 			"response": []
 		},
@@ -94,7 +190,34 @@
 			"name": "AltaMesa",
 			"request": {
 				"method": "POST",
-				"header": []
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "codigo_identificacion",
+							"value": "a9aa9",
+							"type": "text"
+						},
+						{
+							"key": "nombre_cliente",
+							"value": "Jose",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:666/app/mesas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"mesas"
+					]
+				}
 			},
 			"response": []
 		},
@@ -102,7 +225,19 @@
 			"name": "ListarMesas",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:666/app/mesas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"mesas"
+					]
+				}
 			},
 			"response": []
 		}
