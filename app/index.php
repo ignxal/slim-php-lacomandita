@@ -22,6 +22,7 @@ require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
 
 require_once("./middlewares/LoginMiddleware.php");
+require_once("./middlewares/RolMiddleware.php");
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -41,24 +42,24 @@ $app->addBodyParsingMiddleware();
 
 // Routes
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
-  $group->get('[/]', \UsuarioController::class . ':TraerTodos');
-  $group->post('[/]', \UsuarioController::class . ':CargarUno');
+  $group->get('[/]', \UsuarioController::class . ':TraerTodos')->add(new RolMiddleware("socio"));
+  $group->post('[/]', \UsuarioController::class . ':CargarUno')->add(new RolMiddleware("socio"));
   $group->post('/login', \UsuarioController::class . ':Login')->add(new LoginMiddleware);
 });
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
-  $group->post('[/]', \ProductoController::class . ':CargarUno');
-  $group->get('[/]', \ProductoController::class . ':TraerTodos');
+  $group->post('[/]', \ProductoController::class . ':CargarUno')->add(new RolMiddleware("socio"));;
+  $group->get('[/]', \ProductoController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));;
 });
 
 $app->group('/mesas', function (RouteCollectorProxy $group) {
-  $group->post('[/]', \MesaController::class . ':CargarUno');
-  $group->get('[/]', \MesaController::class . ':TraerTodos');
+  $group->post('[/]', \MesaController::class . ':CargarUno')->add(new RolMiddleware("mozo"));;
+  $group->get('[/]', \MesaController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));;
 });
 
 $app->group('/pedidos', function (RouteCollectorProxy $group) {
-  $group->post('[/]', \PedidoController::class . ':CargarUno');
-  $group->get('[/]', \PedidoController::class . ':TraerTodos');
+  $group->post('[/]', \PedidoController::class . ':CargarUno')->add(new RolMiddleware("mozo"));
+  $group->get('[/]', \PedidoController::class . ':TraerTodos'); // aca lleva una logica distinta el sistema de rol
 });
 
 $app->get('[/]', function (Request $request, Response $response) {

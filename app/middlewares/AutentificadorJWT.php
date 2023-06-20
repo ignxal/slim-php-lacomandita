@@ -78,4 +78,23 @@ class AutentificadorJWT
 
         return sha1($aud);
     }
+
+    public static function ObtenerRol($request)
+    {
+        $token = self::ObtenerToken($request);
+        $data = self::ObtenerData($token);
+
+        return $data->tipo;
+    }
+
+    public static function ObtenerToken($request)
+    {
+        $header = $request->getHeaderLine("Authorization");
+
+        if (!isset($header) || $header == "") {
+            throw new Error("Missing Authorization header");
+        }
+
+        return trim(explode("Bearer", $header)[1]);
+    }
 }

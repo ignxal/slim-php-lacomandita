@@ -24,7 +24,7 @@
 								},
 								{
 									"key": "clave",
-									"value": "asd",
+									"value": "admin",
 									"type": "text"
 								}
 							]
@@ -195,7 +195,13 @@
 			"name": "AltaUsuario",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -235,7 +241,13 @@
 			"name": "ListarUsuarios",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:666/app/usuarios",
 					"protocol": "http",
@@ -255,7 +267,13 @@
 			"name": "AltaPedido",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -290,7 +308,13 @@
 			"name": "ListarPedidos",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://localhost:666/app/pedidos",
 					"protocol": "http",
