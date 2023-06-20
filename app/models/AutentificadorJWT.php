@@ -37,6 +37,8 @@ class AutentificadorJWT
         if ($decodificado->aud !== self::Aud()) {
             throw new Exception("No es el usuario valido");
         }
+
+        return true;
     }
 
 

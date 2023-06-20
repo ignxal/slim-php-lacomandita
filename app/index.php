@@ -14,7 +14,6 @@ require __DIR__ . '/../vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
 require_once './middlewares/Logger.php';
-require_once './middlewares/AutentificadorJWT.php';
 
 require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
@@ -23,6 +22,7 @@ require_once './controllers/PedidoController.php';
 
 require_once("./middlewares/LoginMiddleware.php");
 require_once("./middlewares/RolMiddleware.php");
+require_once("./middlewares/JwtMiddleware.php");
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -50,17 +50,18 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->post('[/]', \ProductoController::class . ':CargarUno')->add(new RolMiddleware("socio"));;
   $group->get('[/]', \ProductoController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));;
-});
+})->add(new JwtCheckMiddleware());
 
 $app->group('/mesas', function (RouteCollectorProxy $group) {
   $group->post('[/]', \MesaController::class . ':CargarUno')->add(new RolMiddleware("mozo"));;
   $group->get('[/]', \MesaController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));;
-});
+})->add(new JwtCheckMiddleware());
 
 $app->group('/pedidos', function (RouteCollectorProxy $group) {
   $group->post('[/]', \PedidoController::class . ':CargarUno')->add(new RolMiddleware("mozo"));
-  $group->get('[/]', \PedidoController::class . ':TraerTodos'); // aca lleva una logica distinta el sistema de rol
-});
+  $group->get('[/]', \PedidoController::class . ':TraerTodos');
+  // en el paso de de estado de pedidos lleva una logica distinta el sistema de rol
+})->add(new JwtCheckMiddleware());
 
 $app->get('[/]', function (Request $request, Response $response) {
   $payload = json_encode(array("mensaje" => "Slim Framework 4 PHP"));
