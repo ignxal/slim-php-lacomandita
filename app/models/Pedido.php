@@ -8,6 +8,8 @@ class Pedido
     public $fecha_inicio;
     public $codigo_estado_pedido;
     public $descripcion_estado_pedido;
+    public $descripcion;
+    public $tipo;
     // codigo de agrupacion de pedido 
     const NUEVO = 1;
     const EN_PREPARACION = 2;
@@ -42,7 +44,9 @@ class Pedido
     public static function obtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT id, id_mesa, id_producto as id, fecha_inicio, codigo_estado_pedido, descripcion_estado_pedido FROM pedidos as p INNER JOIN p.");
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT p.id, p.id_mesa, p.id_producto, p.fecha_inicio, p.codigo_estado_pedido, p.descripcion_estado_pedido, pr.descripcion, pr.tipo 
+            FROM pedidos AS p
+            INNER JOIN productos AS pr ON p.id_producto = pr.id");
         $consulta->execute();
 
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Pedido');
