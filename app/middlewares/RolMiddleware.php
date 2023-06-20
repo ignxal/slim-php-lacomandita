@@ -26,7 +26,7 @@ class RolMiddleware
             if ($claim == $this->role || $claim == "socio") {
                 $response = $handler->handle($request);
             } else {
-                $payload = json_encode(array("Error" => "No estas autorizado"));
+                $payload = json_encode(array("error" => "No estas autorizado"));
                 $response = $response->withStatus(403);
             }
         } catch (\Throwable $e) {

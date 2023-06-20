@@ -11,12 +11,16 @@ class UsuarioController extends Usuario implements IApiUsable
     $usuario = $parametros['usuario'] ?? null;
     $clave = $parametros['clave'] ?? null;
     $tipo = $parametros['tipo'] ?? null;
+    $nombre = $parametros['nombre'] ?? null;
+    $apellido = $parametros['apellido'] ?? null;
 
-    if (isset($usuario) && isset($clave) && isset($tipo)) {
+    if (isset($usuario) && isset($clave) && isset($tipo) && isset($nombre) && isset($apellido)) {
       $nuevoUsuario = new Usuario();
       $nuevoUsuario->usuario = $usuario;
       $nuevoUsuario->clave = $clave;
       $nuevoUsuario->tipo = $tipo;
+      $nuevoUsuario->nombre = $nombre;
+      $nuevoUsuario->apellido = $apellido;
       $nuevoUsuario->crearUsuario();
 
       $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
@@ -70,7 +74,7 @@ class UsuarioController extends Usuario implements IApiUsable
 
       if (isset($claims)) {
         $token = AutentificadorJWT::CrearToken($claims);
-        $payload = json_encode(array('Ok' => $token));
+        $payload = json_encode(array('ok' => $token));
 
         $response->getBody()->write($payload);
         $response = $response->withStatus(200);
@@ -80,11 +84,11 @@ class UsuarioController extends Usuario implements IApiUsable
             'application/json'
           );
       } else {
-        $response->getBody()->write(json_encode(array('Error' => "Datos incorrectos")));
+        $response->getBody()->write(json_encode(array('error' => "Datos incorrectos")));
         $response = $response->withStatus(403);
       }
     } else {
-      $response->getBody()->write(json_encode(array('Error' => "Datos incompletos")));
+      $response->getBody()->write(json_encode(array('error' => "Datos incompletos")));
       $response = $response->withStatus(400);
     }
 

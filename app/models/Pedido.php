@@ -22,7 +22,6 @@ class Pedido
         3 => "listo para servir",
         4 => "entregado"
     ];
-    // ... pedidos AS p WHERE p.id = ... 
 
     function crearPedido()
     {

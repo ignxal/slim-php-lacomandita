@@ -6,15 +6,27 @@ class Usuario
     public $usuario;
     public $clave;
     public $tipo;
-    // fecha baja alta, modificacion, nombre apellido y activo o no activo
+    public $nombre;
+    public $apellido;
+    public $fechaAlta;
+    public $fechaModificacion;
+    public $fechaBaja;
+    public $activo;
+
     public function crearUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo) VALUES (:usuario, :clave, :tipo)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, nombre, apellido, fechaAlta, fechaModificacion, fechaBaja, activo) VALUES (:usuario, :clave, :tipo, :nombre, :apellido, :fechaAlta, :fechaModificacion, :fechaBaja, :activo)");
         $claveHash = password_hash($this->clave, PASSWORD_DEFAULT);
         $consulta->bindValue(':usuario', $this->usuario, PDO::PARAM_STR);
         $consulta->bindValue(':tipo', $this->tipo, PDO::PARAM_STR);
         $consulta->bindValue(':clave', $claveHash);
+        $consulta->bindValue(':nombre', $this->nombre, PDO::PARAM_STR);
+        $consulta->bindValue(':apellido', $this->apellido, PDO::PARAM_STR);
+        $consulta->bindValue(':fechaAlta', date("Y-m-d H:i:s"), PDO::PARAM_STR);
+        $consulta->bindValue(':fechaModificacion', "", PDO::PARAM_STR);
+        $consulta->bindValue(':fechaBaja', "", PDO::PARAM_STR);
+        $consulta->bindValue(':activo', true, PDO::PARAM_BOOL);
         $consulta->execute();
 
         return $objAccesoDatos->obtenerUltimoId();

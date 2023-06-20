@@ -14,7 +14,7 @@ class LoginMiddleware
         if (isset($parametros["clave"]) && isset($parametros["usuario"])) {
             $res = $handler->handle($req);
         } else {
-            $res->getBody()->write(json_encode(array('Error' => "Datos incompletos")));
+            $res->getBody()->write(json_encode(array('error' => "Datos incompletos")));
             $res = $res->withStatus(400);
         }
 

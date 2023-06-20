@@ -25,16 +25,16 @@ class jwtCheckMiddleware
             $esValido = AutentificadorJWT::VerificarToken($token);
 
             if ($esValido) {
-                $payload = json_encode(array("Válido" => "true"));
+                $payload = json_encode(array("válido" => "true"));
                 $response = $response->withStatus(200);
                 $response = $handler->handle($request);
             } else {
-                $payload = json_encode(array("Válido" => "false"));
+                $payload = json_encode(array("válido" => "false"));
                 $response = $response->withStatus(400);
                 $response = $handler->handle($request);
             }
         } catch (\Throwable $e) {
-            $payload = json_encode(array('Error' => $e->getMessage()));
+            $payload = json_encode(array('error' => $e->getMessage()));
             $response->getBody()->write($payload);
             $response = $response->withStatus(400);
             return $response->withHeader('Content-Type', 'application/json');
