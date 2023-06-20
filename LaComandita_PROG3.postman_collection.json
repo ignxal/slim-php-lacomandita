@@ -163,7 +163,7 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "alto_cocinero",
+									"value": "soy_cocinero",
 									"type": "text"
 								},
 								{
@@ -219,6 +219,16 @@
 							"key": "tipo",
 							"value": "cocinero",
 							"type": "text"
+						},
+						{
+							"key": "nombre",
+							"value": "Armando",
+							"type": "text"
+						},
+						{
+							"key": "apellido",
+							"value": "Estacocina",
+							"type": "text"
 						}
 					]
 				},
@@ -244,7 +254,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyNzI0OTQsImV4cCI6MTY4NzMzMjQ5NCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.A4iI7A7QZFSNKj7P6T11S7PO4BOdSpowVqaoB8nREUY",
 						"type": "text"
 					}
 				],
