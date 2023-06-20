@@ -8,9 +8,9 @@ class UsuarioController extends Usuario implements IApiUsable
   {
     $parametros = $request->getParsedBody();
 
-    $usuario = $parametros['usuario'];
-    $clave = $parametros['clave'];
-    $tipo = $parametros['tipo'];
+    $usuario = $parametros['usuario'] ?? null;
+    $clave = $parametros['clave'] ?? null;
+    $tipo = $parametros['tipo'] ?? null;
 
     if (isset($usuario) && isset($clave) && isset($tipo)) {
       $nuevoUsuario = new Usuario();
@@ -20,10 +20,11 @@ class UsuarioController extends Usuario implements IApiUsable
       $nuevoUsuario->crearUsuario();
 
       $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
+      $response = $response->withStatus(200);
     } else {
       $payload = json_encode(array("mensaje" => "Datos incompletos"));
+      $response = $response->withStatus(400);
     }
-    // Creamos el usuario
 
     $response->getBody()->write($payload);
     return $response
@@ -56,5 +57,41 @@ class UsuarioController extends Usuario implements IApiUsable
     $response->getBody()->write($payload);
     return $response
       ->withHeader('Content-Type', 'application/json');
+  }
+
+  public function Login($request, $response)
+  {
+    $parametros = $request->getParsedBody();
+    $usuario = $parametros['usuario'] ?? null;
+    $clave = $parametros['clave'] ?? null;
+
+    if (isset($usuario) && isset($clave)) {
+      $claims = Usuario::verificarDatos($usuario, $clave);
+
+      if (isset($claims)) {
+        $token = AutentificadorJWT::CrearToken($claims);
+        $payload = json_encode(array('Ok' => $token));
+
+        $response->getBody()->write($payload);
+        $response = $response->withStatus(200);
+        return $response
+          ->withHeader(
+            'Content-Type',
+            'application/json'
+          );
+      } else {
+        $response->getBody()->write(json_encode(array('Error' => "Datos incorrectos")));
+        $response = $response->withStatus(403);
+      }
+    } else {
+      $response->getBody()->write(json_encode(array('Error' => "Datos incompletos")));
+      $response = $response->withStatus(400);
+    }
+
+    return $response
+      ->withHeader(
+        'Content-Type',
+        'application/json'
+      );
   }
 }

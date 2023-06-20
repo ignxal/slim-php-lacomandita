@@ -14,11 +14,14 @@ require __DIR__ . '/../vendor/autoload.php';
 
 require_once './db/AccesoDatos.php';
 require_once './middlewares/Logger.php';
+require_once './middlewares/AutentificadorJWT.php';
 
 require_once './controllers/UsuarioController.php';
 require_once './controllers/ProductoController.php';
 require_once './controllers/MesaController.php';
 require_once './controllers/PedidoController.php';
+
+require_once("./middlewares/LoginMiddleware.php");
 
 // Load ENV
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
@@ -40,6 +43,7 @@ $app->addBodyParsingMiddleware();
 $app->group('/usuarios', function (RouteCollectorProxy $group) {
   $group->get('[/]', \UsuarioController::class . ':TraerTodos');
   $group->post('[/]', \UsuarioController::class . ':CargarUno');
+  $group->post('/login', \UsuarioController::class . ':Login')->add(new LoginMiddleware);
 });
 
 $app->group('/productos', function (RouteCollectorProxy $group) {
