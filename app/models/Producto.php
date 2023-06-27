@@ -45,22 +45,20 @@ class Producto
                 while (!feof($handle)) {
                     $array = fgetcsv($handle);
 
-                    if ($array !== false) {
+                    if ($array !== false && count($array) >= 5) {
                         $producto = new Producto();
                         $producto->id = $array[0];
                         $producto->precio = $array[1];
                         $producto->descripcion = $array[2];
                         $producto->tipo = $array[3];
                         $producto->estimado_preparacion = $array[4];
-                        echo $producto->id;
-                        echo $producto->precio;
-                        echo $producto->descripcion;
-                        echo $producto->tipo;
-                        echo $producto->estimado_preparacion;
-                        if (!Producto::BuscarUno($producto->id, $producto->descripcion)) {
-                            $producto->CrearProducto();
-                            $flag = true;
-                            $addedProducts++;
+
+                        if ($producto->id !== null && $producto->tipo !== null && $producto->precio !== null && $producto->descripcion !== null && $producto->estimado_preparacion !== null) {
+                            if (!Producto::BuscarUno($producto->id, $producto->descripcion)) {
+                                $producto->CrearProducto();
+                                $flag = true;
+                                $addedProducts++;
+                            }
                         }
                     }
                 }

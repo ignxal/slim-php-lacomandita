@@ -105,12 +105,18 @@ class ProductoController extends Producto implements IApiUsable
     {
         $archivo = $request->getUploadedFiles()['archivo'];
         $payload = "";
+        $directory = 'import';
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
 
         if (isset($archivo)) {
             $extension = pathinfo($archivo->getClientFileName(), PATHINFO_EXTENSION);
 
             if ($extension === 'csv') {
-                $path = "./" . $archivo->getClientFileName();
+                $filename = uniqid('csv_', true) . '.csv';
+                $path = $directory . '/' . $filename;
                 $archivo->moveTo($path);
                 $payload = json_encode(Producto::LeerArchivo($path));
             } else {
