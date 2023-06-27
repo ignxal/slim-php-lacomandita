@@ -89,6 +89,13 @@ class AutentificadorJWT
         return $data->tipo;
     }
 
+    public static function ObtenerUsuario($request)
+    {
+        $token = self::ObtenerToken($request);
+        $data = self::ObtenerData($token);
+        return $data->id_usuario;
+    }
+
     public static function ObtenerToken($request)
     {
         $header = $request->getHeaderLine("Authorization");

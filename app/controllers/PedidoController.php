@@ -17,11 +17,12 @@ class PedidoController extends Pedido implements IApiUsable
             $nuevoPedido = new Pedido();
             $nuevoPedido->id_producto = $id_producto;
             $nuevoPedido->id_mesa = $id_mesa;
-            $id = $nuevoPedido->crearPedido();
+            $id = $nuevoPedido->CrearPedido();
 
             $payload = json_encode(array("mensaje" => "Pedido creado con exito. Id: " . $id));
         } else {
             $payload = json_encode(array("mensaje" => "Datos incompletos"));
+            $response = $response->withStatus(400);
         }
 
         $response->getBody()->write($payload);
@@ -30,7 +31,7 @@ class PedidoController extends Pedido implements IApiUsable
 
     function TraerTodos($request, $response, $args)
     {
-        $lista = Pedido::obtenerTodos();
+        $lista = Pedido::ObtenerTodos();
         $payload = json_encode(array("Pedido" => $lista), JSON_PRETTY_PRINT);
 
         $response->getBody()->write($payload);
@@ -54,5 +55,23 @@ class PedidoController extends Pedido implements IApiUsable
         $response->getBody()->write($payload);
         return $response
             ->withHeader('Content-Type', 'application/json');
+    }
+
+    function ActualizarPedido($request, $response, $args)
+    {
+        $parametros = $request->getParsedBody();
+        $id = $parametros['id_pedido'];
+        echo $id;
+        if (isset($id)) {
+            echo "asdsad";
+            Pedido::ActualizarPedidoPorId($id);
+            $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
+        } else {
+            $payload = json_encode(array('error' => "Datos incompletos"));
+            $response = $response->withStatus(400);
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }
