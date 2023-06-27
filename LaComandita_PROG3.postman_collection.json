@@ -192,13 +192,76 @@
 			]
 		},
 		{
+			"name": "Archivos",
+			"item": [
+				{
+					"name": "ExportCSV",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDQ3NzAsImV4cCI6MTY4NzkwNDc3MCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.6VskKxauNSnMrBwBNCompu_PwZZFmdGfWi8Z0C8pTrE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:666/app/productos/exportarCSV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"app",
+								"productos",
+								"exportarCSV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ImportarCSV",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "archivo",
+									"type": "file",
+									"src": "/C:/Users/ignac/Downloads/productos.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:666/app/productos/importarCSV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"app",
+								"productos",
+								"importarCSV"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "AltaUsuario",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NzY5NzUsImV4cCI6MTY4NzkzNjk3NSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.GS7ydZh116e2QqaxoSahH4yA4Jdi4MikAY2YX8FeryU",
 						"type": "text"
 					}
 				],
@@ -207,7 +270,7 @@
 					"formdata": [
 						{
 							"key": "usuario",
-							"value": "soy_cocinero",
+							"value": "soy_bart",
 							"type": "text"
 						},
 						{
@@ -217,17 +280,17 @@
 						},
 						{
 							"key": "tipo",
-							"value": "cocinero",
+							"value": "bartender",
 							"type": "text"
 						},
 						{
 							"key": "nombre",
-							"value": "Armando",
+							"value": "Elcapo",
 							"type": "text"
 						},
 						{
 							"key": "apellido",
-							"value": "Estacocina",
+							"value": "DeLosTragos",
 							"type": "text"
 						}
 					]
@@ -455,6 +518,43 @@
 					"path": [
 						"app",
 						"mesas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ActualizarPedido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDcwODksImV4cCI6MTY4NzkwNzA4OSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6ImJhcnRlbmRlciIsImlkIjoxNX0sImFwcCI6IkxhIENvbWFuZGl0YSJ9.HIdQz09no6bdy1hzRdSQXwejtqQL8c0ZzB1LnhtiT4g",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id_pedido",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:666/app/pedidos/actualizar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "666",
+					"path": [
+						"app",
+						"pedidos",
+						"actualizar"
 					]
 				}
 			},
