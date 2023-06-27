@@ -53,6 +53,7 @@ $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->get('[/]', \ProductoController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));
   $group->get('/exportarCSV', \ProductoController::class . ':ExportarCSV')->add(new RolMiddleware("socio"));
   $group->post('/importarCSV', \ProductoController::class . ':ImportarCSV')->add(new RolMiddleware("socio"));
+  $group->get('/exportarPDF', \ProductoController::class . ':ExportarPDF')->add(new RolMiddleware("socio"));
 })->add(new JwtCheckMiddleware());
 
 $app->group('/mesas', function (RouteCollectorProxy $group) {

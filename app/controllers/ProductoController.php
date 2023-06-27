@@ -3,6 +3,8 @@
 require_once './models/Producto.php';
 require_once './interfaces/IApiUsable.php';
 
+use Dompdf\Dompdf;
+
 class ProductoController extends Producto implements IApiUsable
 {
     function CargarUno($request, $response, $args)
@@ -134,6 +136,31 @@ class ProductoController extends Producto implements IApiUsable
             $response = $response->withStatus(400);
         }
 
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
+
+    function ExportarPDF($request, $response, $args)
+    {
+        $dompdf = new Dompdf();
+
+        $array = Producto::ObtenerTodos();
+        $stringHTML = Producto::TraerTablaHtml($array);
+        $dompdf->loadHtml($stringHTML);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
+
+        $pdfContent = $dompdf->output();
+
+        $directory = "export";
+        $filePath = $directory . "/exported_pdf.pdf";
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        file_put_contents($filePath, $pdfContent);
+        $payload = json_encode(array('ok' => 'Pdf exportado y guardado exitosamente.'));
         $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }

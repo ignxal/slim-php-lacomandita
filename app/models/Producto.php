@@ -85,4 +85,39 @@ class Producto
         $result = $consulta->fetch();
         return $result !== false;
     }
+
+    public static function TraerTablaHtml($array)
+    {
+        $HTML = "";
+
+        if (!is_null($array) && is_array($array)) {
+            $HTML = "<h1>Productos</h1>";
+            $HTML .= "<table>";
+            $HTML .= "<thead>";
+            $HTML .= "<tr>";
+            $HTML .= "<th>ID</th>";
+            $HTML .= "<th>Tipo</th>";
+            $HTML .= "<th>Precio</th>";
+            $HTML .= "<th>Descripción</th>";
+            $HTML .= "<th>Estimado de Preparación</th>";
+            $HTML .= "</tr>";
+            $HTML .= "</thead>";
+            $HTML .= "<tbody>";
+
+            foreach ($array as $producto) {
+                $HTML .= "<tr>";
+                $HTML .= "<td>" . $producto->id . "</td>";
+                $HTML .= "<td>" . $producto->tipo . "</td>";
+                $HTML .= "<td>" . $producto->precio . "</td>";
+                $HTML .= "<td>" . $producto->descripcion . "</td>";
+                $HTML .= "<td>" . $producto->estimado_preparacion . "</td>";
+                $HTML .= "</tr>";
+            }
+
+            $HTML .= "</tbody>";
+            $HTML .= "</table>";
+        }
+
+        return $HTML;
+    }
 }
