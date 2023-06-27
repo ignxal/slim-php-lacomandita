@@ -51,6 +51,7 @@ $app->group('/usuarios', function (RouteCollectorProxy $group) {
 $app->group('/productos', function (RouteCollectorProxy $group) {
   $group->post('[/]', \ProductoController::class . ':CargarUno')->add(new RolMiddleware("socio"));
   $group->get('[/]', \ProductoController::class . ':TraerTodos')->add(new RolMiddleware("mozo"));
+  $group->get('/exportarCSV', \ProductoController::class . ':ExportarCSV')->add(new RolMiddleware("socio"));
 })->add(new JwtCheckMiddleware());
 
 $app->group('/mesas', function (RouteCollectorProxy $group) {

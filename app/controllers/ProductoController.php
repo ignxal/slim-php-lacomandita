@@ -61,4 +61,40 @@ class ProductoController extends Producto implements IApiUsable
         return $response
             ->withHeader('Content-Type', 'application/json');
     }
+
+    function ExportarCSV($request, $response, $args)
+    {
+        $productos = Producto::ObtenerTodos();
+        $payload = json_decode(json_encode($productos), true);
+        $filename = 'productos.csv';
+        $directory = 'export';
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0777, true);
+        }
+
+        $filePath = $directory . '/' . $filename;
+
+        $fp = fopen($filePath, 'w');
+
+        if ($fp) {
+            foreach ($payload as $row) {
+                fputcsv($fp, $row);
+            }
+            fclose($fp);
+
+            header('Content-Type: application/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename=' . $filename);
+            header('Content-Length: ' . filesize($filePath));
+            readfile($filePath);
+
+            return $response->withHeader('Content-Type', 'application/csv');
+        } else {
+            $payload = json_encode(array("error" => "Error al crear el CSV."));
+            $response->getBody()->write($payload);
+            $response = $response->withStatus(500);
+
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+    }
 }

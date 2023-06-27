@@ -7,7 +7,7 @@ class Producto
     public $descripcion;
     public $estimado_preparacion;
 
-    public function crearProducto()
+    public function CrearProducto()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta('INSERT INTO productos (tipo, precio, descripcion, estimado_preparacion) VALUES (:tipo,:precio,:descripcion,:estimado_preparacion)');
@@ -20,7 +20,7 @@ class Producto
         return $objAccesoDatos->obtenerUltimoId();
     }
 
-    public static function obtenerTodos()
+    public static function ObtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, tipo, precio, descripcion, estimado_preparacion FROM productos");
