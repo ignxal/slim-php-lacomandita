@@ -19,12 +19,12 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "admin",
+									"value": "soy_socio",
 									"type": "text"
 								},
 								{
 									"key": "clave",
-									"value": "admin",
+									"value": "test",
 									"type": "text"
 								}
 							]
@@ -55,7 +55,7 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "el_bartender",
+									"value": "soy_bart",
 									"type": "text"
 								},
 								{
@@ -91,7 +91,7 @@
 							"formdata": [
 								{
 									"key": "usuario",
-									"value": "buen_mozo",
+									"value": "soy_mozo",
 									"type": "text"
 								},
 								{
@@ -225,7 +225,13 @@
 					"name": "ImportarCSV",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDQ3NzAsImV4cCI6MTY4NzkwNDc3MCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.6VskKxauNSnMrBwBNCompu_PwZZFmdGfWi8Z0C8pTrE",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "formdata",
 							"formdata": [
@@ -256,17 +262,24 @@
 					"name": "ExportarPDF",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDQ3NzAsImV4cCI6MTY4NzkwNDc3MCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.6VskKxauNSnMrBwBNCompu_PwZZFmdGfWi8Z0C8pTrE",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:666/productos/ExportarPDF",
+							"raw": "http://localhost:666/app/productos/exportarPDF",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "666",
 							"path": [
+								"app",
 								"productos",
-								"ExportarPDF"
+								"exportarPDF"
 							]
 						}
 					},
@@ -290,7 +303,7 @@
 					"formdata": [
 						{
 							"key": "usuario",
-							"value": "soy_bart",
+							"value": "soy_mozo",
 							"type": "text"
 						},
 						{
@@ -300,17 +313,17 @@
 						},
 						{
 							"key": "tipo",
-							"value": "bartender",
+							"value": "mozo",
 							"type": "text"
 						},
 						{
 							"key": "nombre",
-							"value": "Elcapo",
+							"value": "Buen",
 							"type": "text"
 						},
 						{
 							"key": "apellido",
-							"value": "DeLosTragos",
+							"value": "Mozo",
 							"type": "text"
 						}
 					]
@@ -333,6 +346,16 @@
 		{
 			"name": "ListarUsuarios",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
@@ -363,7 +386,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NzY5NzUsImV4cCI6MTY4NzkzNjk3NSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.GS7ydZh116e2QqaxoSahH4yA4Jdi4MikAY2YX8FeryU",
 						"type": "text"
 					}
 				],
@@ -378,6 +401,11 @@
 						{
 							"key": "id_producto",
 							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "codigo_identificacion",
+							"value": "a9bb9",
 							"type": "text"
 						}
 					]
@@ -400,11 +428,21 @@
 		{
 			"name": "ListarPedidos",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODcyMzYxOTgsImV4cCI6MTY4NzI5NjE5OCwiYXVkIjoiOGVhMDY5MTc0YTE0YWEyN2M2NzAyMDc4YjliZTZlMTA2Y2E0OWU3ZCIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjV9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.2WAO594yu84Nf8u70HGPldc3yC9mxUeGu_SiV0qibUg",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDQ3NzAsImV4cCI6MTY4NzkwNDc3MCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.6VskKxauNSnMrBwBNCompu_PwZZFmdGfWi8Z0C8pTrE",
 						"type": "text"
 					}
 				],
@@ -427,7 +465,13 @@
 			"name": "AltaProducto",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NzY5NzUsImV4cCI6MTY4NzkzNjk3NSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.GS7ydZh116e2QqaxoSahH4yA4Jdi4MikAY2YX8FeryU",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
@@ -438,12 +482,12 @@
 						},
 						{
 							"key": "descripcion",
-							"value": "Vino",
+							"value": "Fernet",
 							"type": "text"
 						},
 						{
 							"key": "estimado_preparacion",
-							"value": "00: 01: 00",
+							"value": "00: 04: 00",
 							"type": "text"
 						},
 						{
@@ -492,13 +536,19 @@
 			"name": "AltaMesa",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NzY5NzUsImV4cCI6MTY4NzkzNjk3NSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6InNvY2lvIiwiaWQiOjE0fSwiYXBwIjoiTGEgQ29tYW5kaXRhIn0.GS7ydZh116e2QqaxoSahH4yA4Jdi4MikAY2YX8FeryU",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "codigo_identificacion",
-							"value": "a9aa9",
+							"value": "a9bb9",
 							"type": "text"
 						},
 						{
@@ -550,7 +600,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4NDcwODksImV4cCI6MTY4NzkwNzA4OSwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6ImJhcnRlbmRlciIsImlkIjoxNX0sImFwcCI6IkxhIENvbWFuZGl0YSJ9.HIdQz09no6bdy1hzRdSQXwejtqQL8c0ZzB1LnhtiT4g",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2ODc4ODE3NjAsImV4cCI6MTY4Nzk0MTc2MCwiYXVkIjoiNjdlMDI2NDZlMjZmZjYwYTFjMmMzZGQ0NGY4ZmViNTFiMmQzZDE2MiIsImRhdGEiOnsidGlwbyI6Im1vem8iLCJpZCI6MTd9LCJhcHAiOiJMYSBDb21hbmRpdGEifQ.7pmWgM8VCqhjg8VcYrxPQcED3iXl0SvZn7uC5IlKvRs",
 						"type": "text"
 					}
 				],
@@ -559,7 +609,7 @@
 					"urlencoded": [
 						{
 							"key": "id_pedido",
-							"value": "2",
+							"value": "4",
 							"type": "text"
 						}
 					]
