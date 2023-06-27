@@ -44,7 +44,7 @@ class ProductoController extends Producto implements IApiUsable
 
     function TraerTodos($request, $response, $args)
     {
-        $lista = Producto::obtenerTodos();
+        $lista = Producto::ObtenerTodos();
         $payload = json_encode(array("Producto" => $lista), JSON_PRETTY_PRINT);
 
         $response->getBody()->write($payload);

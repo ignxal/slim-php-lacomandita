@@ -22,7 +22,7 @@ class UsuarioController extends Usuario implements IApiUsable
         $nuevoUsuario->tipo = $tipo;
         $nuevoUsuario->nombre = $nombre;
         $nuevoUsuario->apellido = $apellido;
-        $nuevoUsuario->crearUsuario();
+        $nuevoUsuario->CrearUsuario();
 
         $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
         $response = $response->withStatus(200);
@@ -42,7 +42,7 @@ class UsuarioController extends Usuario implements IApiUsable
 
   public function TraerTodos($request, $response, $args)
   {
-    $lista = Usuario::obtenerTodos();
+    $lista = Usuario::ObtenerTodos();
     $payload = json_encode(array("listaUsuario" => $lista));
 
     $response->getBody()->write($payload);

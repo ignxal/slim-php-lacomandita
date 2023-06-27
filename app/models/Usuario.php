@@ -13,7 +13,7 @@ class Usuario
     public $fechaBaja;
     public $activo;
 
-    public function crearUsuario()
+    public function CrearUsuario()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuarios (usuario, clave, tipo, nombre, apellido, fechaAlta, fechaModificacion, fechaBaja, activo) VALUES (:usuario, :clave, :tipo, :nombre, :apellido, :fechaAlta, :fechaModificacion, :fechaBaja, :activo)");
@@ -32,7 +32,7 @@ class Usuario
         return $objAccesoDatos->obtenerUltimoId();
     }
 
-    public static function obtenerTodos()
+    public static function ObtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, tipo FROM usuarios");
@@ -43,7 +43,7 @@ class Usuario
 
     public static function verificarDatos($usuario, $clave)
     {
-        $usuarioRecibido = self::obtenerUsuario($usuario);
+        $usuarioRecibido = self::ObtenerUsuario($usuario);
 
         if (isset($usuarioRecibido) && (password_verify($clave, $usuarioRecibido->clave) ||  $usuarioRecibido->clave == $clave)) {
             return array(
@@ -55,7 +55,7 @@ class Usuario
         return null;
     }
 
-    public static function obtenerUsuario($usuario)
+    public static function ObtenerUsuario($usuario)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, usuario, clave, tipo FROM usuarios WHERE usuario = :usuario");
