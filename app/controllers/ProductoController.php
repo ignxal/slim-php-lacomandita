@@ -142,26 +142,34 @@ class ProductoController extends Producto implements IApiUsable
 
     function ExportarPDF($request, $response, $args)
     {
-        $dompdf = new Dompdf();
+        try {
+            $dompdf = new Dompdf();
 
-        $array = Producto::ObtenerTodos();
-        $stringHTML = Producto::TraerTablaHtml($array);
-        $dompdf->loadHtml($stringHTML);
-        $dompdf->setPaper('A4', 'landscape');
-        $dompdf->render();
+            $array = Producto::ObtenerTodos();
+            $stringHTML = Producto::TraerTablaHtml($array);
+            $dompdf->loadHtml($stringHTML);
+            $dompdf->setPaper('A4', 'landscape');
+            $dompdf->render();
 
-        $pdfContent = $dompdf->output();
+            $pdfContent = $dompdf->output();
 
-        $directory = "export";
-        $filePath = $directory . "/exported_pdf.pdf";
+            $directory = "export";
+            $filePath = $directory . "/exported_pdf.pdf";
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+            if (!is_dir($directory)) {
+                mkdir($directory, 0755, true);
+            }
+
+            file_put_contents($filePath, $pdfContent);
+
+            $payload = json_encode(array('ok' => 'PDF exportado y guardado exitosamente.'));
+            $response->getBody()->write($payload);
+        } catch (Exception $e) {
+            $payload = json_encode(array('error' => 'Error al exportar el PDF: ' . $e->getMessage()));
+            $response->getBody()->write($payload);
+            $response = $response->withStatus(500);
         }
 
-        file_put_contents($filePath, $pdfContent);
-        $payload = json_encode(array('ok' => 'Pdf exportado y guardado exitosamente.'));
-        $response->getBody()->write($payload);
         return $response->withHeader('Content-Type', 'application/json');
     }
 }
