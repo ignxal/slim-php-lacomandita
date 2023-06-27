@@ -17,11 +17,12 @@ class MesaController extends Mesa implements IApiUsable
             $nuevaMesa = new Mesa();
             $nuevaMesa->codigo_identificacion = $codigo_identificacion;
             $nuevaMesa->nombre_cliente = $nombre_cliente;
-            $id = $nuevaMesa->crearMesa();
+            $id = $nuevaMesa->CrearMesa();
 
             $payload = json_encode(array("mensaje" => "Mesa creada con exito. Id: " . $id));
         } else {
-            $payload = json_encode(array("mensaje" => "Datos incompletos"));
+            $payload = json_encode(array("error" => "Datos incompletos"));
+            $response = $response->withStatus(400);
         }
 
         $response->getBody()->write($payload);
@@ -30,7 +31,7 @@ class MesaController extends Mesa implements IApiUsable
 
     function TraerTodos($request, $response, $args)
     {
-        $lista = Mesa::obtenerTodos();
+        $lista = Mesa::ObtenerTodos();
         $payload = json_encode(array("Mesa" => $lista), JSON_PRETTY_PRINT);
 
         $response->getBody()->write($payload);
@@ -43,6 +44,8 @@ class MesaController extends Mesa implements IApiUsable
         $payload = json_encode(array("mensaje" => "Función Próximamente!"));
 
         $response->getBody()->write($payload);
+        $response = $response->withStatus(501);
+
         return $response
             ->withHeader('Content-Type', 'application/json');
     }
@@ -52,6 +55,8 @@ class MesaController extends Mesa implements IApiUsable
         $payload = json_encode(array("mensaje" => "Función Próximamente!"));
 
         $response->getBody()->write($payload);
+        $response = $response->withStatus(501);
+
         return $response
             ->withHeader('Content-Type', 'application/json');
     }

@@ -36,7 +36,7 @@ class Producto
     public static function LeerArchivo($archivo)
     {
         $flag = false;
-        $addedProducts = 0;
+        $productosAgregados = 0;
 
         if (is_readable($archivo)) {
             $handle = fopen($archivo, 'r');
@@ -57,7 +57,7 @@ class Producto
                             if (!Producto::BuscarUno($producto->id, $producto->descripcion)) {
                                 $producto->CrearProducto();
                                 $flag = true;
-                                $addedProducts++;
+                                $productosAgregados++;
                             }
                         }
                     }
@@ -68,7 +68,7 @@ class Producto
         }
 
         if ($flag) {
-            return array("ok" => "Se agregaron correctamente $addedProducts productos no existentes.");
+            return array("ok" => "Se agregaron correctamente $productosAgregados productos no existentes.");
         } else {
             return array("ok" => "No se agregó ningún producto nuevo.");
         }

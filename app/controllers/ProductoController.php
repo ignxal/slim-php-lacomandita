@@ -130,7 +130,7 @@ class ProductoController extends Producto implements IApiUsable
                 $response = $response->withStatus(400);
             }
         } else {
-            $payload = json_encode(array('error' => 'No se encontro un archivo.'));
+            $payload = json_encode(array('error' => 'No se encontró un archivo.'));
             $response = $response->withStatus(400);
         }
 

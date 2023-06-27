@@ -19,7 +19,7 @@ class Mesa
         4 => "cerrada"
     ];
 
-    public function crearMesa()
+    public function CrearMesa()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO mesas (codigo_identificacion, nombre_cliente, codigo_estado_mesa, descripcion_estado_mesa) VALUES (:codigo_identificacion, :nombre_cliente, :codigo_estado_mesa, :descripcion_estado_mesa)");
@@ -32,7 +32,7 @@ class Mesa
         return $objAccesoDatos->obtenerUltimoId();
     }
 
-    public static function obtenerTodos()
+    public static function ObtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta("SELECT id, codigo_identificacion, nombre_cliente, codigo_estado_mesa, descripcion_estado_mesa FROM mesas");
@@ -41,13 +41,39 @@ class Mesa
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Mesa');
     }
 
-    public static function actualizarMesa($id_mesa, $codigo_estado_mesa)
+    public static function ActualizarMesa($idMesa, $codigoEstadoMesa)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("UPDATE mesas set codigo_estado_mesa = :codigo_estado_mesa, descripcion_estado_mesa = :descripcion_estado_mesa where id = :id_mesa");
+        $consulta = $objAccesoDatos->prepararConsulta("UPDATE mesas set codigo_estado_mesa = :codigo_estado_mesa, descripcion_estado_mesa = :descripcion_estado_mesa WHERE id = :id_mesa");
+        $consulta->bindValue(':id_mesa', $idMesa, PDO::PARAM_INT);
+        $consulta->bindValue(':codigo_estado_mesa', $codigoEstadoMesa, PDO::PARAM_INT);
+        $consulta->bindValue(':descripcion_estado_mesa', Mesa::ESTADOS_DESCRIPCION[(int)$codigoEstadoMesa], PDO::PARAM_STR);
+
+        return $consulta->execute();
+    }
+
+    public static function TienePedidosPendientePorIdPedido($id_pedido)
+    {
+        $codigoIdentificacion = Pedido::ObtenerCodigoIdentificacion($id_pedido)['codigo_identificacion_mesa'];
+        $idMesa = Pedido::ObtenerIdMesa($id_pedido)['id_mesa'];
+        $pedidosPendientes = Mesa::ObtenerPedidosSinEntregarDeMesa($idMesa, $codigoIdentificacion);
+
+        if (gettype($pedidosPendientes) != "boolean") {
+            return true;
+        };
+
+        return $idMesa;
+    }
+
+    public static function ObtenerPedidosSinEntregarDeMesa($id_mesa, $codigoIdentificacion)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT id FROM pedidos WHERE id_mesa = :id_mesa AND codigo_identificacion_mesa = :codigo_identificacion_mesa AND codigo_estado_pedido != :codigo_estado_pedido");
         $consulta->bindValue(':id_mesa', $id_mesa, PDO::PARAM_INT);
-        $consulta->bindValue(':codigo_estado_mesa', $codigo_estado_mesa, PDO::PARAM_INT);
-        $consulta->bindValue(':descripcion_estado_mesa', Mesa::ESTADOS_DESCRIPCION[(int)$codigo_estado_mesa], PDO::PARAM_STR);
+        $consulta->bindValue(':codigo_identificacion_mesa', $codigoIdentificacion, PDO::PARAM_STR);
+        $consulta->bindValue(':codigo_estado_pedido', Pedido::ENTREGADO, PDO::PARAM_INT);
         $consulta->execute();
+
+        return $consulta->fetch();
     }
 }

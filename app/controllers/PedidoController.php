@@ -8,15 +8,18 @@ class PedidoController extends Pedido implements IApiUsable
     function CargarUno($request, $response, $args)
     {
         $parametros = $request->getParsedBody();
-        $id_producto = $parametros['id_producto'];
-        $id_mesa = $parametros['id_mesa'];
+        $id_producto = $parametros['id_producto'] ?? null;
+        $id_mesa = $parametros['id_mesa'] ?? null;
+        $codigo_identificacion = $parametros['codigo_identificacion'] ?? null;
 
         if ((isset($id_producto) &&
-            isset($id_mesa))) {
+            isset($id_mesa) &&
+            isset($codigo_identificacion))) {
 
             $nuevoPedido = new Pedido();
             $nuevoPedido->id_producto = $id_producto;
             $nuevoPedido->id_mesa = $id_mesa;
+            $nuevoPedido->codigo_identificacion_mesa = $codigo_identificacion;
             $id = $nuevoPedido->CrearPedido();
 
             $payload = json_encode(array("mensaje" => "Pedido creado con exito. Id: " . $id));
@@ -61,9 +64,8 @@ class PedidoController extends Pedido implements IApiUsable
     {
         $parametros = $request->getParsedBody();
         $id = $parametros['id_pedido'];
-        echo $id;
+
         if (isset($id)) {
-            echo "asdsad";
             Pedido::ActualizarPedidoPorId($id);
             $payload = json_encode(array("mensaje" => "Pedido modificado con exito"));
         } else {

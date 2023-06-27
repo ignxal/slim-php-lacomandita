@@ -1,10 +1,13 @@
 <?php
 
+use function PHPSTORM_META\type;
+
 class Pedido
 {
     public $id;
     public $id_mesa;
     public $id_producto;
+    public $codigo_identificacion_mesa;
     public $fecha_inicio;
     public $codigo_estado_pedido;
     public $descripcion_estado_pedido;
@@ -25,16 +28,17 @@ class Pedido
     function CrearPedido()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos(id_producto, id_mesa, fecha_inicio, codigo_estado_pedido, descripcion_estado_pedido) VALUES (:id_producto, :id_mesa, :fecha_inicio, :codigo_estado_pedido, :descripcion_estado_pedido)");
+        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pedidos(id_producto, id_mesa, codigo_identificacion_mesa, fecha_inicio, codigo_estado_pedido, descripcion_estado_pedido) VALUES (:id_producto, :id_mesa, :codigo_identificacion_mesa, :fecha_inicio, :codigo_estado_pedido, :descripcion_estado_pedido)");
         $consulta->bindValue(':id_producto', $this->id_producto, PDO::PARAM_INT);
         $consulta->bindValue(':id_mesa', $this->id_mesa, PDO::PARAM_INT);
+        $consulta->bindValue(':codigo_identificacion_mesa', $this->codigo_identificacion_mesa, PDO::PARAM_STR);
         $consulta->bindValue(':fecha_inicio', date("Y-m-d H:i:s"), PDO::PARAM_STR);
         $consulta->bindvalue(':codigo_estado_pedido', Pedido::NUEVO, PDO::PARAM_INT);
         $consulta->bindvalue(':descripcion_estado_pedido', Pedido::ESTADOS_DESCRIPCION[Pedido::NUEVO], PDO::PARAM_STR);
         $consulta->execute();
         $id = $objAccesoDatos->obtenerUltimoId();
 
-        Mesa::actualizarMesa($this->id_mesa, Mesa::ESPERANDO);
+        Mesa::ActualizarMesa($this->id_mesa, Mesa::ESPERANDO);
 
         return $id;
     }
@@ -42,7 +46,7 @@ class Pedido
     public static function ObtenerTodos()
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
-        $consulta = $objAccesoDatos->prepararConsulta("SELECT p.id, p.id_mesa, p.id_producto, p.fecha_inicio, p.codigo_estado_pedido, p.descripcion_estado_pedido, pr.descripcion, pr.tipo 
+        $consulta = $objAccesoDatos->prepararConsulta("SELECT p.id, p.id_mesa, p.codigo_identificacion_mesa, p.id_producto, p.fecha_inicio, p.codigo_estado_pedido, p.descripcion_estado_pedido, pr.descripcion, pr.tipo 
             FROM pedidos AS p
             INNER JOIN productos AS pr ON p.id_producto = pr.id");
         $consulta->execute();
@@ -67,14 +71,41 @@ class Pedido
         $consulta->bindValue(':id_pedido', $id_pedido, PDO::PARAM_INT);
         $consulta->bindValue(':codigo_estado_pedido', $nuevoCodigoEstado, PDO::PARAM_INT);
         $consulta->bindvalue(':descripcion_estado_pedido', Pedido::ESTADOS_DESCRIPCION[$nuevoCodigoEstado], PDO::PARAM_STR);
+        $consulta->execute();
 
-        return $consulta->execute();
+        $resultadoPendiente = Mesa::TienePedidosPendientePorIdPedido($id_pedido);
+
+        if ($nuevoCodigoEstado == Pedido::ENTREGADO && gettype($resultadoPendiente) == "integer") {
+            return Mesa::ActualizarMesa($resultadoPendiente, Mesa::COMIENDO);
+        }
+
+        return true;
     }
 
     public static function ObtenerUltimoEstado($id_pedido)
     {
         $objAccesoDatos = AccesoDatos::obtenerInstancia();
         $consulta = $objAccesoDatos->prepararConsulta('SELECT codigo_estado_pedido FROM pedidos WHERE id = :id_pedido');
+        $consulta->bindValue(':id_pedido', $id_pedido, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetch();
+    }
+
+    public static function ObtenerCodigoIdentificacion($id_pedido)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta('SELECT codigo_identificacion_mesa FROM pedidos WHERE id = :id_pedido');
+        $consulta->bindValue(':id_pedido', $id_pedido, PDO::PARAM_INT);
+        $consulta->execute();
+
+        return $consulta->fetch();
+    }
+
+    public static function ObtenerIdMesa($id_pedido)
+    {
+        $objAccesoDatos = AccesoDatos::obtenerInstancia();
+        $consulta = $objAccesoDatos->prepararConsulta('SELECT id_mesa FROM pedidos WHERE id = :id_pedido');
         $consulta->bindValue(':id_pedido', $id_pedido, PDO::PARAM_INT);
         $consulta->execute();
 
@@ -93,7 +124,6 @@ class Pedido
 
         return $consulta->fetch();
     }
-
 
     public static function UsuarioPuedeModificar($ultimoEstado, $tipoPedido, $rolUsuario)
     {
