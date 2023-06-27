@@ -15,18 +15,23 @@ class UsuarioController extends Usuario implements IApiUsable
     $apellido = $parametros['apellido'] ?? null;
 
     if (isset($usuario) && isset($clave) && isset($tipo) && isset($nombre) && isset($apellido)) {
-      $nuevoUsuario = new Usuario();
-      $nuevoUsuario->usuario = $usuario;
-      $nuevoUsuario->clave = $clave;
-      $nuevoUsuario->tipo = $tipo;
-      $nuevoUsuario->nombre = $nombre;
-      $nuevoUsuario->apellido = $apellido;
-      $nuevoUsuario->crearUsuario();
+      if ($tipo == "socio" || $tipo == "mozo" || $tipo == "bartender" || $tipo == "cervecero" || $tipo == "mozo") {
+        $nuevoUsuario = new Usuario();
+        $nuevoUsuario->usuario = $usuario;
+        $nuevoUsuario->clave = $clave;
+        $nuevoUsuario->tipo = $tipo;
+        $nuevoUsuario->nombre = $nombre;
+        $nuevoUsuario->apellido = $apellido;
+        $nuevoUsuario->crearUsuario();
 
-      $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
-      $response = $response->withStatus(200);
+        $payload = json_encode(array("mensaje" => "Usuario creado con exito"));
+        $response = $response->withStatus(200);
+      } else {
+        $payload = json_encode(array("error" => "Tipo inválido"));
+        $response = $response->withStatus(400);
+      }
     } else {
-      $payload = json_encode(array("mensaje" => "Datos incompletos"));
+      $payload = json_encode(array("error" => "Datos incompletos"));
       $response = $response->withStatus(400);
     }
 

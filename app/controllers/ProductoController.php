@@ -18,16 +18,22 @@ class ProductoController extends Producto implements IApiUsable
             isset($descripcion) &&
             isset($estimado))) {
 
-            $nuevoProducto = new Producto();
-            $nuevoProducto->tipo = $tipo;
-            $nuevoProducto->precio = $precio;
-            $nuevoProducto->descripcion = $descripcion;
-            $nuevoProducto->estimado_preparacion = $estimado;
-            $id = $nuevoProducto->crearProducto();
+            if ($tipo == "Comida" || $tipo == "Trago" || $tipo == "Cerveza") {
+                $nuevoProducto = new Producto();
+                $nuevoProducto->tipo = $tipo;
+                $nuevoProducto->precio = $precio;
+                $nuevoProducto->descripcion = $descripcion;
+                $nuevoProducto->estimado_preparacion = $estimado;
+                $id = $nuevoProducto->crearProducto();
 
-            $payload = json_encode(array("mensaje" => "Producto creado con exito. Id: " . $id));
+                $payload = json_encode(array("mensaje" => "Producto creado con exito. Id: " . $id));
+            } else {
+                $payload = json_encode(array("error" => "Tipo inválido"));
+                $response = $response->withStatus(400);
+            }
         } else {
-            $payload = json_encode(array("mensaje" => "Datos incompletos"));
+            $payload = json_encode(array("error" => "Datos incompletos"));
+            $response = $response->withStatus(400);
         }
 
         $response->getBody()->write($payload);
