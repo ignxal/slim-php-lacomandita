@@ -75,7 +75,7 @@ class UsuarioController extends Usuario implements IApiUsable
     $clave = $parametros['clave'] ?? null;
 
     if (isset($usuario) && isset($clave)) {
-      $claims = Usuario::verificarDatos($usuario, $clave);
+      $claims = Usuario::VerificarDatos($usuario, $clave);
 
       if (isset($claims)) {
         $token = AutentificadorJWT::CrearToken($claims);

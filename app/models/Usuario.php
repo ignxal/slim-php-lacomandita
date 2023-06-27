@@ -41,7 +41,7 @@ class Usuario
         return $consulta->fetchAll(PDO::FETCH_CLASS, 'Usuario');
     }
 
-    public static function verificarDatos($usuario, $clave)
+    public static function VerificarDatos($usuario, $clave)
     {
         $usuarioRecibido = self::ObtenerUsuario($usuario);
 
