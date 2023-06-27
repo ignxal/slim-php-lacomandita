@@ -49,6 +49,8 @@ class ProductoController extends Producto implements IApiUsable
         $payload = json_encode(array("mensaje" => "Función Próximamente!"));
 
         $response->getBody()->write($payload);
+        $response = $response->withStatus(501);
+
         return $response
             ->withHeader('Content-Type', 'application/json');
     }
@@ -58,6 +60,7 @@ class ProductoController extends Producto implements IApiUsable
         $payload = json_encode(array("mensaje" => "Función Próximamente!"));
 
         $response->getBody()->write($payload);
+        $response = $response->withStatus(501);
         return $response
             ->withHeader('Content-Type', 'application/json');
     }
@@ -96,5 +99,30 @@ class ProductoController extends Producto implements IApiUsable
 
             return $response->withHeader('Content-Type', 'application/json');
         }
+    }
+
+    function ImportarCSV($request, $response, $args)
+    {
+        $archivo = $request->getUploadedFiles()['archivo'];
+        $payload = "";
+
+        if (isset($archivo)) {
+            $extension = pathinfo($archivo->getClientFileName(), PATHINFO_EXTENSION);
+
+            if ($extension === 'csv') {
+                $path = "./" . $archivo->getClientFileName();
+                $archivo->moveTo($path);
+                $payload = json_encode(Producto::LeerArchivo($path));
+            } else {
+                $payload = json_encode(array('error' => 'Extensión inválida. Solo se permiten CSV.'));
+                $response = $response->withStatus(400);
+            }
+        } else {
+            $payload = json_encode(array('error' => 'No se encontro un archivo.'));
+            $response = $response->withStatus(400);
+        }
+
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }
