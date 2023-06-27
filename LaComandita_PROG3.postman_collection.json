@@ -195,7 +195,7 @@
 			"name": "Archivos",
 			"item": [
 				{
-					"name": "ExportCSV",
+					"name": "ExportarCSV",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -247,6 +247,26 @@
 								"app",
 								"productos",
 								"importarCSV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ExportarPDF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:666/productos/ExportarPDF",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "666",
+							"path": [
+								"productos",
+								"ExportarPDF"
 							]
 						}
 					},
